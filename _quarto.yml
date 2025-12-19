@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Финальный проект по программированию"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Предисловие
+      - href: about.qmd
+        text: Процесс и результаты работы
+
+format:
+  html:
+    theme:
+    - sandstone
+    fontsize: "14pt"
+    css: styles.css
+    toc: true
+    bibliography: bibliography.bib
