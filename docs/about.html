@@ -416,7 +416,7 @@ Converting page 11 to Бажов_вырезка_11.png... done!</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: пакет 'ellmer' был собран под R версии 4.5.2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">600</span>) <span class="co">#Ошибка таймаута при обращении к OpenRouter API, поэтому увеличиваю время в надежде, что сайт зарендерится</span></span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">900</span>) <span class="co">#Ошибка таймаута при обращении к OpenRouter API, поэтому увеличиваю время в надежде, что сайт зарендерится</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openrouter</span>(</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Ты эксперт по текстовой разметке в формате TEI.</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Разметь предоставленный текст сказа Павла Бажова 'Огневушка-Поскакушка' в формате TEI XML. Обязательно:</span></span>
@@ -425,7 +425,7 @@ Converting page 11 to Бажов_вырезка_11.png... done!</code></pre>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">  3. Выдели даты &lt;date&gt;</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">  4. Места: &lt;placeName&gt; с атрибутом type</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">  5. Сохрани оригинальную структуру текста</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">  6. Верни TEI разметку"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">  6. Верни ТОЛЬКО TEI разметку"</span>,</span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"google/gemma-3-27b-it:free"</span></span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -532,15 +532,13 @@ Converting page 11 to Бажов_вырезка_11.png... done!</code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Имя Частота
-1             Федюнька      42
-2           дедко Ефим      33
+1             Федюнька      39
+2           дедко Ефим      35
 3 Огневушка-Поскакушка      24
-4            старатели      18
-5                филин       4
-6               филина       3
-7                Филин       2
-8                Фили́н       2
-9      Поскакушкинский       1</code></pre>
+4            старатели      13
+5                 отец       8
+6               Мачеха       2
+7    Федюнькиного отца       1</code></pre>
 </div>
 </div>
 </section>

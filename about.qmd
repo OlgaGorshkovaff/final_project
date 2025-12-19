@@ -136,13 +136,13 @@ writeLines(text5, con = "./Бажов_NORM.txt")
 
 
 ```{r, include = FALSE}
-Sys.setenv(OPENROUTER_API_KEY = "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")
+Sys.setenv(OPENROUTER_API_KEY = "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")
 Sys.getenv("OPENROUTER_API_KEY")
 ```
 
 ```{r, message = FALSE, results = 'hide'}
 library(ellmer)
-options(timeout = 600) #Ошибка таймаута при обращении к OpenRouter API, поэтому увеличиваю время в надежде, что сайт зарендерится
+options(timeout = 900) #Ошибка таймаута при обращении к OpenRouter API, поэтому увеличиваю время в надежде, что сайт зарендерится
 chat <- chat_openrouter(
   system_prompt = "Ты эксперт по текстовой разметке в формате TEI.
   Разметь предоставленный текст сказа Павла Бажова 'Огневушка-Поскакушка' в формате TEI XML. Обязательно:
@@ -151,7 +151,7 @@ chat <- chat_openrouter(
   3. Выдели даты <date>
   4. Места: <placeName> с атрибутом type
   5. Сохрани оригинальную структуру текста
-  6. Верни TEI разметку",
+  6. Верни ТОЛЬКО TEI разметку",
   api_key = Sys.getenv("OPENROUTER_API_KEY"),
   model = "google/gemma-3-27b-it:free"
 )
@@ -289,7 +289,17 @@ name_groups <- c(
   "Федюнькиного" = "Федюнька",
   "Дед Ефим" = "дедко Ефим",
   "дедке Ефиму" = "дедко Ефим",
-  "Тятя" = "отец"
+  "Тятя" = "отец",
+  "Федюня" = "Федюнька",
+  "мачехе" = "Мачеха",
+  "мачеха" = "Мачеха",
+  "Поскакушке" = "Огневушка-Поскакушка",
+  "Федюнюшка" = "Федюнька",
+  "Федюнькин отец" = "отец",
+  "отцовскую" = "отец",
+  "Поскакушкинским" = "Огневушка-Поскакушка",
+  "дедком Ефимом" = "дедко Ефим",
+  "Поскакушкинский" = "Огневушка-Поскакушка"
 )
 
 normalized_chars <- sapply(characters, function(name) {
