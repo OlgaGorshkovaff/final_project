@@ -1,11 +1,9 @@
 ---
-title: "final"
+title: "Несколько слов о материалах и теме"
 ---
 
-This is a Quarto website.
+Я очень хотела взять текст о своем любимом Незнайке, но оказалось, что это не так просто.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Поэтому в этой работе я взяла для анализа небольшой сказ Павла Бажова.
 
-```{r}
-1 + 1
-```
+![](1.jpg)

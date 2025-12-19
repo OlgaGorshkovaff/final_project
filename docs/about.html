@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Финальный проект по программированию</title>
+<title>Этапы работы и результаты – Финальный проект по программированию</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -141,15 +161,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#подготовка" id="toc-подготовка" class="nav-link active" data-scroll-target="#подготовка">Подготовка</a></li>
+  <li><a href="#этап-первый-распознавание-текста-ocr-с-помощью-tesseract" id="toc-этап-первый-распознавание-текста-ocr-с-помощью-tesseract" class="nav-link" data-scroll-target="#этап-первый-распознавание-текста-ocr-с-помощью-tesseract">Этап первый: распознавание текста (OCR) с помощью {tesseract}</a>
+  <ul class="collapse">
+  <li><a href="#для-начала-вырежем-несколько-страниц-из-pdf-обрежем-обложку-и-входные-данные-которые-нам-не-понадобятся" id="toc-для-начала-вырежем-несколько-страниц-из-pdf-обрежем-обложку-и-входные-данные-которые-нам-не-понадобятся" class="nav-link" data-scroll-target="#для-начала-вырежем-несколько-страниц-из-pdf-обрежем-обложку-и-входные-данные-которые-нам-не-понадобятся">Для начала вырежем несколько страниц из pdf, обрежем обложку и входные данные, которые нам не понадобятся</a></li>
+  <li><a href="#распознаем-текст-снова-и-снова" id="toc-распознаем-текст-снова-и-снова" class="nav-link" data-scroll-target="#распознаем-текст-снова-и-снова">Распознаем текст снова и снова</a></li>
+  <li><a href="#преобразуем-pdf-в-страницы-png" id="toc-преобразуем-pdf-в-страницы-png" class="nav-link" data-scroll-target="#преобразуем-pdf-в-страницы-png">Преобразуем pdf в страницы png</a></li>
+  <li><a href="#запустим-ocr-на-наших-картинках" id="toc-запустим-ocr-на-наших-картинках" class="nav-link" data-scroll-target="#запустим-ocr-на-наших-картинках">Запустим OCR на наших картинках</a></li>
+  </ul></li>
+  <li><a href="#этап-второй-регулярные-выражения-для-исправления-ocr-ошибок-и-структурирования-текста" id="toc-этап-второй-регулярные-выражения-для-исправления-ocr-ошибок-и-структурирования-текста" class="nav-link" data-scroll-target="#этап-второй-регулярные-выражения-для-исправления-ocr-ошибок-и-структурирования-текста">Этап второй: регулярные выражения для исправления OCR-ошибок и структурирования текста</a>
+  <ul class="collapse">
+  <li><a href="#загрузим-распознанный-нами-текст" id="toc-загрузим-распознанный-нами-текст" class="nav-link" data-scroll-target="#загрузим-распознанный-нами-текст">Загрузим распознанный нами текст</a></li>
+  <li><a href="#удалим-все-строки-с-цифрами---в-нашем-случае-это-номера-страниц-они-нам-ни-к-чему" id="toc-удалим-все-строки-с-цифрами---в-нашем-случае-это-номера-страниц-они-нам-ни-к-чему" class="nav-link" data-scroll-target="#удалим-все-строки-с-цифрами---в-нашем-случае-это-номера-страниц-они-нам-ни-к-чему">Удалим все строки с цифрами - в нашем случае это номера страниц, они нам ни к чему</a></li>
+  <li><a href="#склеиваем-переносы-слов" id="toc-склеиваем-переносы-слов" class="nav-link" data-scroll-target="#склеиваем-переносы-слов">Склеиваем переносы слов</a></li>
+  <li><a href="#внесем-коррективы-и-запишем-нормализованную-расшифровку-в-файл" id="toc-внесем-коррективы-и-запишем-нормализованную-расшифровку-в-файл" class="nav-link" data-scroll-target="#внесем-коррективы-и-запишем-нормализованную-расшифровку-в-файл">Внесем коррективы и запишем нормализованную расшифровку в файл</a></li>
+  </ul></li>
+  <li><a href="#этап-третий-разметим-текст-tei" id="toc-этап-третий-разметим-текст-tei" class="nav-link" data-scroll-target="#этап-третий-разметим-текст-tei">Этап третий: разметим текст TEI</a></li>
+  <li><a href="#этап-четвертый-анализ-tei-разметки-с-помощью-xml2" id="toc-этап-четвертый-анализ-tei-разметки-с-помощью-xml2" class="nav-link" data-scroll-target="#этап-четвертый-анализ-tei-разметки-с-помощью-xml2">Этап четвертый: анализ TEI-разметки с помощью {xml2}</a>
+  <ul class="collapse">
+  <li><a href="#парсинг-и-пространство-имен" id="toc-парсинг-и-пространство-имен" class="nav-link" data-scroll-target="#парсинг-и-пространство-имен">Парсинг и пространство имен</a></li>
+  <li><a href="#смотрим-данные-по-тегу-persname" id="toc-смотрим-данные-по-тегу-persname" class="nav-link" data-scroll-target="#смотрим-данные-по-тегу-persname">Смотрим данные по тегу persName</a></li>
+  </ul></li>
+  <li><a href="#визуализируем-данные" id="toc-визуализируем-данные" class="nav-link" data-scroll-target="#визуализируем-данные">Визуализируем данные</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Этапы работы и результаты</h1>
 </div>
 
 
@@ -166,17 +213,362 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
+<section id="подготовка" class="level2">
+<h2 class="anchored" data-anchor-id="подготовка">Подготовка</h2>
+<p>Я взяла в работу сборник <strong>Уральские сказы</strong> Павла Бажова <span class="citation" data-cites="Бажов1970">(<a href="#ref-Бажов1970" role="doc-biblioref">Бажов 1970</a>)</span> Выбрала сказ <strong>Огневушка-Поскакушка</strong>, он небольшой, но подходит формальным критериям.</p>
+</section>
+<section id="этап-первый-распознавание-текста-ocr-с-помощью-tesseract" class="level1">
+<h1>Этап первый: распознавание текста (OCR) с помощью {tesseract}</h1>
+<section id="для-начала-вырежем-несколько-страниц-из-pdf-обрежем-обложку-и-входные-данные-которые-нам-не-понадобятся" class="level2">
+<h2 class="anchored" data-anchor-id="для-начала-вырежем-несколько-страниц-из-pdf-обрежем-обложку-и-входные-данные-которые-нам-не-понадобятся">Для начала вырежем несколько страниц из pdf, обрежем обложку и входные данные, которые нам не понадобятся</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qpdf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdftools)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>text_ogn <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"../bazhov_final"</span>, <span class="at">pattern =</span> <span class="st">"pdf"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>text_ogn</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf_subset</span>(<span class="at">input =</span> <span class="st">"bazhov_uralskie_skazy_1970.pdf"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">output =</span> <span class="st">"./Бажов_вырезка.pdf"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">pages =</span> <span class="fu">c</span>(<span class="dv">171</span><span class="sc">:</span><span class="dv">179</span>,<span class="dv">181</span><span class="sc">:</span><span class="dv">182</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Текст в нашем файле уже распознан благодаря хорошим людям, но притворимся, что нет.</p>
+</section>
+<section id="распознаем-текст-снова-и-снова" class="level2">
+<h2 class="anchored" data-anchor-id="распознаем-текст-снова-и-снова">Распознаем текст снова и снова</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tesseractgt)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#tesseract_download("rus")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Преобразим наш pdf в серию картинок. Сначала распознаем текст в файле</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>text_ogn_ocr <span class="ot">&lt;-</span> <span class="fu">pdf_ocr_text</span>(<span class="st">"./Бажов_вырезка.pdf"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">language =</span> <span class="st">"rus"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>Converting page 1 to Бажов_вырезка_1.png...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> done!
+Converting page 2 to Бажов_вырезка_2.png... done!
+Converting page 3 to Бажов_вырезка_3.png... done!
+Converting page 4 to Бажов_вырезка_4.png... done!
+Converting page 5 to Бажов_вырезка_5.png... done!
+Converting page 6 to Бажов_вырезка_6.png... done!
+Converting page 7 to Бажов_вырезка_7.png... done!
+Converting page 8 to Бажов_вырезка_8.png... done!
+Converting page 9 to Бажов_вырезка_9.png... done!
+Converting page 10 to Бажов_вырезка_10.png... done!
+Converting page 11 to Бажов_вырезка_11.png... done!</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text_ogn_ocr,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "——=—=— в м о. й | р кН\nзн \"=&gt; . = о 7 о А и ну \"\nо а Се - м о ИИ . 9!\n\n—. = Е Е т. в У и\", паг.\n\nЕЕ 9.” Жи\n\nван —— — ЕЕ — -- 2 -. у Й И ео - ' ч).\n\nа о =. |) 5.477), А\n\nУ Оо 2, У:\n\nА “ОИ Й № ОА |\n\nа А а. у Ч И. у\n^^ |. (7. а и. ТВ\n\n== и р “ | ”. =” г 4, Ро —. 7; &lt;” 0; . , „7\n\n=“ и. : РАВ &gt; &gt; , `. „и М\n, &amp; ве-- 778 7 С“ ЯЗ Г ” , 7”. ГВ\n—= Илии, УВВ. 0 37 —. МА 29,\nЕЯ АА и в: С ТОЩаь\" ЧБ\n— Н у МИИ&gt; А абы с р\n. — , и хи, у =. чи ще ‘’ ом ин И -ь`,\n=) и Эс 2-Х м\n| / ” а = «&gt; 272 3-й И К щщ\nРР (&gt; РР \"обоев.\nчм . хе. -—— &lt;&gt; &lt;“. . .. ` (т.о &gt; : 7; 22% &gt; =\nт о. &lt;\n—. м. | . 7\n° о А,\nОГНЕВУШКА-ПОСКАКУШКА\n\n“(Сидели раз старатели круг огонька в лесу. Четверо\nбольших, а пятый парнишечко. Лет так восьми, не больше,\nФедюнькой его звали.\n\nДавно всем спать пора, да разговор занятный пришелся.\nВ артелке, видишь, один старик был. Дедко Ефим. С моло-\nдых годов он из земли золотую крупку выбирал. Мало ли\nкаких случаев у него бывало. Он и рассказывал, а старатели\nслушали.\n\nОтец уж сколько раз говорил Федюньке!\n\n— Ложился бы ты, Тюньша, спать!\n\nПарнишечку охота послушать.\n\n— Погоди, тятенька! Я маленечко еще посижу.\n\nНу, вот.... Кончил дедко Ефим рассказ. На месте костер-\nка одни угольки остались, а старатели всё сидят да на эти\nугольки глядят.\n\n168\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+[2] "Вдруг из самой серединки вынырнула девчоночка махонь-\nка. Вроде кукленки, а живая. Волосенки рыженькие, сара-\nфанчик голубенький и в руке платочек, тоже сголуба *.\n\nПоглядела девчонка веселыми глазками, блеснула зубен-\nками, подбоченилась, платочком махнула и пошла плясать.\nИ так у ней легко да ловко выходит, что и сказать нельзя.\nУ старателей дух захватило. Глядят — не наглядятся, а сами\nмолчат, будто задумались.\n\nДевчонка сперва по уголькам круги давала, потом, — вид-\nно, ей тесно стало, — пошире пошла. Старатели отодвигают-\nся, дорогу дают, а девчонка как круг пройдет, так и подрастет\nмаленько. Старатели дальше отодвинутся. Она еще круг даст\nи опять подрастет. Когда вовсе далеко отодвинулись, дев-\nчонка по промежуткам в охват людей пошла, — с петлями\nу ней круги стали. Потом и вовсе за людей вышла и опять\nровненько закружилась, а сама уже ростом с Федюньку.\nУ большой сосны остановилась, топнула ножкой, зубенками\nблеснула, платочком махнула, как свистнула:\n\n— Фи-т-ть! й-ю-ю-у...\n\nТут филин заухал, захохотал, и никакой девчонки не\nстало.\n\nКабы одни большие сидели, так, может, ничего бы даль-\nше и не случилось. Каждый, видишь, подумал:\n\n«Вот до чего на огонь загляделся! В глазах зарябило...\nНеведомо что померещится`с устатку-то!»\n\nОдин Федюнька этого не подумал и спрашивает у отца:\n\n— Тятя, это кто?\n\nОтец отвечает:\n\n— Филин. Кому больше-то? Неуж не слыхал, как он\nухает?\n\n— Да не про филина я! Его-то, поди-ка, знаю и ни ка-\nпельки не боюсь. Ты мне про девчонку скажи.\n\n— Про какую девчонку?\n\n— А вот которая на углях плясала. Еще ты и все отодви-\nгались, как она широким кругом пошла.\n\nТут отец и другие старатели давай доспрашивать Фе-\nдюньку, что он видел. Парнишечко рассказал. Один стара-\nтель еше спросил:\n\n169\n"</code></pre>
+</div>
+</div>
+<p>Видим, что есть проблема с распознаванием рисунка в книге в качестве симоволов. Попробуем это поправить!</p>
+</section>
+<section id="преобразуем-pdf-в-страницы-png" class="level2">
+<h2 class="anchored" data-anchor-id="преобразуем-pdf-в-страницы-png">Преобразуем pdf в страницы png</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf_convert</span>(<span class="st">"./Бажов_вырезка.pdf"</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">format =</span> <span class="st">"png"</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">dpi =</span> <span class="dv">300</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">pages =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">filenames =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Думаю, что лучше всего в нашем случае будет просто обрезать рисунок</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="st">"Бажов_вырезка_1.png"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>img_cropped <span class="ot">&lt;-</span> <span class="fu">image_crop</span>(img, <span class="st">"100%x100%+0%+1100%"</span>)  <span class="co">#методом подбора</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">image_write</span>(img_cropped, <span class="st">"Бажов_вырезка_1.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="Бажов_вырезка_1.png" class="img-fluid"></p>
+</section>
+<section id="запустим-ocr-на-наших-картинках" class="level2">
+<h2 class="anchored" data-anchor-id="запустим-ocr-на-наших-картинках">Запустим OCR на наших картинках</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>png_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"Бажов_вырезка_.*</span><span class="sc">\\</span><span class="st">.png$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sorted_png_files <span class="ot">&lt;-</span> png_files[<span class="fu">order</span>(<span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">".*_(</span><span class="sc">\\</span><span class="st">d+).*</span><span class="sc">\\</span><span class="st">.png$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, png_files)))]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ocr_text <span class="ot">&lt;-</span> tesseract<span class="sc">::</span><span class="fu">ocr</span>(sorted_png_files, <span class="at">engine =</span> <span class="st">"rus"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (ocr_text,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ОГНЕВУШКА-ПОСКАКУШКА\n\n(Сидели раз старатели круг огонька в лесу. Четверо\nбольших, а пятый парнишечко. Лет так восьми, не больше,\nФедюнькой его звали.\n\nДавно всем спать пора, да разговор занятный пришелся.\nВ артелке, видишь, один старик был. Дедко Ефим. С моло-\nдых годов он из земли золотую крупку выбирал. Мало ли\nкаких случаев у него бывало. Он и рассказывал, а старатели\nслушали.\n\nОтец уж сколько раз говорил Федюньке!\n\n— Ложился бы ты, Тюньша, спать!\n\nПарнишечку охота послушать.\n\n— Погоди, тятенька! Я маленечко еще посижу.\n\nНу, вот.... Кончил дедко Ефим рассказ. На месте костер-\nка одни угольки остались, а старатели всё сидят да на эти\nугольки глядят.\n\n168\n"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+[2] "Вдруг из самой серединки вынырнула девчоночка махонь-\nка. Вроде кукленки, а живая. Волосенки рыженькие, сара-\nфанчик голубенький и в руке платочек, тоже сголуба *.\n\nПоглядела девчонка веселыми глазками, блеснула зубен-\nками, подбоченилась, платочком махнула и пошла плясать.\nИ так у ней легко да ловко выходит, что и сказать нельзя.\nУ старателей дух захватило. Глядят — не наглядятся, а сами\nмолчат, будто задумались.\n\nДевчонка сперва по уголькам круги давала, потом, — вид-\nно, ей тесно стало, — пошире пошла. Старатели отодвигают-\nся, дорогу дают, а девчонка как круг пройдет, так и подрастет\nмаленько. Старатели дальше отодвинутся. Она еще круг даст\nи опять подрастет. Когда вовсе далеко отодвинулись, дев-\nчонка по промежуткам в охват людей пошла,— с петлями\nу ней круги стали. Потом и вовсе за людей вышла и опять\nровненько закружилась, а сама уже ростом с Федюньку.\nУ большой сосны остановилась, топнула ножкой, зубенками\nблеснула, платочком махнула, как свистнула:\n\n— Фи-т-ть! Й-ю-ю-у...\n\nТут филин заухал, захохотал, и никакой девчонки не\nстало.\n\nКабы одни большие сидели, так, может, ничего бы даль-\nше и не случилось. Каждый, видишь, подумал:\n\n«Вот до чего на огонь загляделся! В глазах зарябило...\nНеведомо что померещится`с устатку-то!»\n\nОдин Федюнька этого не подумал и спрашивает у отца:\n\n— Тятя, это кто?\n\nОтец отвечает:\n\n— Филин. Кому больше-то? Неуж не слыхал, как он\nухает?\n\n— Да не про филина я! Его-то, поди-ка, знаю и ни ка-\nпельки не боюсь. Ты мне про девчонку скажи.\n\n— Про какую девчонку?\n\n— А вот которая на углях плясала. Еще ты и все отодви-\nгались, как она широким кругом пошла.\n\nТут отец и другие старатели давай доспрашивать Фе-\nдюньку, что он видел. Парнишечко рассказал. Один стара-\nтель еще спросил:\n\n169\n"</code></pre>
+</div>
+</div>
+<p>И склеим всё, что нам распознала эта чудо-машина в текстовый файл</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(ocr_text, <span class="at">con =</span> <span class="st">"./Бажов_OCR.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="2.jpg" class="img-fluid"></p>
+</section>
+</section>
+<section id="этап-второй-регулярные-выражения-для-исправления-ocr-ошибок-и-структурирования-текста" class="level1">
+<h1>Этап второй: регулярные выражения для исправления OCR-ошибок и структурирования текста</h1>
+<section id="загрузим-распознанный-нами-текст" class="level2">
+<h2 class="anchored" data-anchor-id="загрузим-распознанный-нами-текст">Загрузим распознанный нами текст</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="at">con =</span> <span class="st">"./Бажов_OCR.txt"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text,<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ОГНЕВУШКА-ПОСКАКУШКА"                                      
+ [2] ""                                                          
+ [3] "(Сидели раз старатели круг огонька в лесу. Четверо"        
+ [4] "больших, а пятый парнишечко. Лет так восьми, не больше,"   
+ [5] "Федюнькой его звали."                                      
+ [6] ""                                                          
+ [7] "Давно всем спать пора, да разговор занятный пришелся."     
+ [8] "В артелке, видишь, один старик был. Дедко Ефим. С моло-"   
+ [9] "дых годов он из земли золотую крупку выбирал. Мало ли"     
+[10] "каких случаев у него бывало. Он и рассказывал, а старатели"
+[11] "слушали."                                                  
+[12] ""                                                          
+[13] "Отец уж сколько раз говорил Федюньке!"                     
+[14] ""                                                          
+[15] "— Ложился бы ты, Тюньша, спать!"                           
+[16] ""                                                          
+[17] "Парнишечку охота послушать."                               
+[18] ""                                                          
+[19] "— Погоди, тятенька! Я маленечко еще посижу."               
+[20] ""                                                          
+[21] "Ну, вот.... Кончил дедко Ефим рассказ. На месте костер-"   
+[22] "ка одни угольки остались, а старатели всё сидят да на эти" 
+[23] "угольки глядят."                                           
+[24] ""                                                          
+[25] "168"                                                       
+[26] ""                                                          
+[27] "Вдруг из самой серединки вынырнула девчоночка махонь-"     </code></pre>
+</div>
+</div>
+<p>Видим, что у нас остались номера страниц и дополнительные маленькие артефакты неправильного распознавания текста. Чуть-чуть подкорректируем.</p>
+</section>
+<section id="удалим-все-строки-с-цифрами---в-нашем-случае-это-номера-страниц-они-нам-ни-к-чему" class="level2">
+<h2 class="anchored" data-anchor-id="удалим-все-строки-с-цифрами---в-нашем-случае-это-номера-страниц-они-нам-ни-к-чему">Удалим все строки с цифрами - в нашем случае это номера страниц, они нам ни к чему</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>text2 <span class="ot">&lt;-</span> text[<span class="sc">!</span><span class="fu">str_detect</span>(text, <span class="st">"</span><span class="sc">\\</span><span class="st">d"</span>)]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text2,<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ОГНЕВУШКА-ПОСКАКУШКА"                                      
+ [2] ""                                                          
+ [3] "(Сидели раз старатели круг огонька в лесу. Четверо"        
+ [4] "больших, а пятый парнишечко. Лет так восьми, не больше,"   
+ [5] "Федюнькой его звали."                                      
+ [6] ""                                                          
+ [7] "Давно всем спать пора, да разговор занятный пришелся."     
+ [8] "В артелке, видишь, один старик был. Дедко Ефим. С моло-"   
+ [9] "дых годов он из земли золотую крупку выбирал. Мало ли"     
+[10] "каких случаев у него бывало. Он и рассказывал, а старатели"
+[11] "слушали."                                                  
+[12] ""                                                          
+[13] "Отец уж сколько раз говорил Федюньке!"                     
+[14] ""                                                          
+[15] "— Ложился бы ты, Тюньша, спать!"                           
+[16] ""                                                          
+[17] "Парнишечку охота послушать."                               
+[18] ""                                                          
+[19] "— Погоди, тятенька! Я маленечко еще посижу."               
+[20] ""                                                          
+[21] "Ну, вот.... Кончил дедко Ефим рассказ. На месте костер-"   
+[22] "ка одни угольки остались, а старатели всё сидят да на эти" 
+[23] "угольки глядят."                                           
+[24] ""                                                          
+[25] ""                                                          
+[26] "Вдруг из самой серединки вынырнула девчоночка махонь-"     
+[27] "ка. Вроде кукленки, а живая. Волосенки рыженькие, сара-"   </code></pre>
+</div>
+</div>
+<p>Как будто всё и хорошо? Но нет, склеим переносы слов, чтобы было точно славно</p>
+</section>
+<section id="склеиваем-переносы-слов" class="level2">
+<h2 class="anchored" data-anchor-id="склеиваем-переносы-слов">Склеиваем переносы слов</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>text3 <span class="ot">&lt;-</span> <span class="fu">paste</span>(text2, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">"(</span><span class="sc">\\</span><span class="st">p{L}+)-</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">n</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">p{L}+)"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>text4 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(pattern, <span class="st">"</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">2"</span>, text3, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(text4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Видим, что в текст из-за ошибок в распознавании закралась скобка и одна опечатка, которых в самом тексте нет</p>
+</section>
+<section id="внесем-коррективы-и-запишем-нормализованную-расшифровку-в-файл" class="level2">
+<h2 class="anchored" data-anchor-id="внесем-коррективы-и-запишем-нормализованную-расшифровку-в-файл">Внесем коррективы и запишем нормализованную расшифровку в файл</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>text5 <span class="ot">&lt;-</span> text4 <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="st">"[()]"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">'</span><span class="sc">\"</span><span class="st">Гут'</span>, <span class="st">'Тут'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(text5)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(text5, <span class="at">con =</span> <span class="st">"./Бажов_NORM.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="3.jpg" class="img-fluid"></p>
+</section>
+</section>
+<section id="этап-третий-разметим-текст-tei" class="level1">
+<h1>Этап третий: разметим текст TEI</h1>
+<p>Размечать полученный документ будем с помощью агрегатора LLM-моделей OpenRouter. Я перепробовала несколько моделей (openai/gpt-oss-120b:free, qwen/qwen3-235b-a22b:free), но они либо были недоступны, либо выдавали ошибку. Поэтому я остановилась на модели <strong>google/gemma-3-27b-it:free</strong>, она дала более менее приятный результат!</p>
+<p>Естественно, привязываем ключ, но я его вам показывать не буду:)</p>
+<p>Загружаем библиотеку, настраиваем системный промпт, выбираем модель. Формулируем пользовательский промпт (возможно, его можно докрутить до еще более идеального, но мне кажется, что подойдет и такой), кидаем это всё нашей модели и ждём…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: пакет 'ellmer' был собран под R версии 4.5.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">600</span>) <span class="co">#Ошибка таймаута при обращении к OpenRouter API, поэтому увеличиваю время в надежде, что сайт зарендерится</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openrouter</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Ты эксперт по текстовой разметке в формате TEI.</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Разметь предоставленный текст сказа Павла Бажова 'Огневушка-Поскакушка' в формате TEI XML. Обязательно:</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">  1. Выдели абзацы &lt;p&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">  2. Выдели имена собственные &lt;persName&gt; (Тюньш/Федюн, дедко Ефим/Дедко Ефим/Ефим, Старател/старател, Отец Федюньки, Мачеха, Огневушка-Поскакушка/Поскакушка и производные)</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">  3. Выдели даты &lt;date&gt;</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">  4. Места: &lt;placeName&gt; с атрибутом type</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">  5. Сохрани оригинальную структуру текста</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">  6. Верни TEI разметку"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"google/gemma-3-27b-it:free"</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `api_key` argument of `chat_openrouter()` is deprecated as of ellmer 0.4.0.
+ℹ Please use the `credentials` argument instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>user_prompt <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Разметь в TEI следующий текст, начни с начала текста, а не с середины.ТОЛЬКО:,</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">                    - &lt;p&gt; для абзацев,</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">                    - &lt;persName&gt; для имен, </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">                    - &lt;date&gt; для дат,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="st">                    - &lt;said&gt; для прямой речи,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">                    НЕ ИСПОЛЬЗУЙ &lt;br/&gt;, &lt;div&gt; или другие теги. Обязательно размечай ВЕСЬ предоставленный текст до конца, </span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="st">не обрывай ответ. Если текст длинный, продолжай с того места, </span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="st">где остановился"</span>, text5)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> chat<span class="sc">$</span><span class="fu">chat</span>(user_prompt)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>result_clean <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(result, <span class="st">"```xml|```"</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>xml_clean <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^,"</span>, <span class="st">""</span>, result_clean)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>xml_clean <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^</span><span class="sc">\n</span><span class="st">+"</span>, <span class="st">""</span>, xml_clean)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(xml_clean, <span class="at">con =</span> <span class="st">"ОгневушкаTEI.xml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>В процессе возникла проблема: изначально созданный документ начинался с ```xml, а не с инструкции по обработке XML (<!--?xml version="1.0" encoding="utf-8"?-->). Без этого всё ломалось и не работало дальше при парсинге. Пришлось добавить регулярное выражение, чтобы почистить результат.</p>
+<p>Результат выгружаем в файл .xml, но можем немного посмотреть на то, что получилось так:</p>
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<tei xmlns="http://www.tei-c.org/ns/1.0"> <teiheader> <filedesc> <titlestmt>
+<title>
+Огневушка-Поскакушка
+</title>
+<pre><code>    &lt;author&gt;Павел Бажов&lt;/author&gt;
+  &lt;/titleStmt&gt;
+  &lt;publicationStmt&gt;
+    &lt;p&gt;Для учебных целей&lt;/p&gt;
+  &lt;/publicationStmt&gt;
+  &lt;sourceDesc&gt;
+    &lt;p&gt;Исходный текст&lt;/p&gt;
+  &lt;/sourceDesc&gt;
+&lt;/fileDesc&gt;</code></pre>
+</titlestmt></filedesc></teiheader> <text>
+
+<p>
+Сидели раз <persname>старатели</persname> круг огонька в лесу. Четверо больших, а пятый парнишечко. Лет так восьми, не больше, <persname>Федюнькой</persname> его звали.
+</p>
+<p><img src="5.jpg" class="img-fluid"></p>
+</text></tei></section>
+<section id="этап-четвертый-анализ-tei-разметки-с-помощью-xml2" class="level1">
+<h1>Этап четвертый: анализ TEI-разметки с помощью {xml2}</h1>
+<p>На этом этапе нам понадобится библиотека {xml2}, привязываем её и поехали:)</p>
+<section id="парсинг-и-пространство-имен" class="level2">
+<h2 class="anchored" data-anchor-id="парсинг-и-пространство-имен">Парсинг и пространство имен</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xml2)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>doc <span class="ot">&lt;-</span> <span class="fu">read_xml</span>(<span class="st">"ОгневушкаTEI.xml"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">xml_ns</span>(doc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Документ запарсили, задали пространство имён, давайте найдем что-нибудь интересное.</p>
+</section>
+<section id="смотрим-данные-по-тегу-persname" class="level2">
+<h2 class="anchored" data-anchor-id="смотрим-данные-по-тегу-persname">Смотрим данные по тегу persName</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">&lt;-</span> <span class="fu">xml_find_all</span>(doc, <span class="st">"//d1:persName"</span>, <span class="at">ns =</span> ns) <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xml_text</span>()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>character_names <span class="ot">&lt;-</span> <span class="fu">unique</span>(characters)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>character_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(character_names) <span class="sc">|&gt;</span> </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Freq))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(character_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  character_names Freq
+1        дед Ефим    1
+2        Дед Ефим    1
+3     дедка Ефима    1
+4           дедко    1
+5      дедко Ефим    1
+6      Дедко Ефим    1</code></pre>
+</div>
+</div>
+<p>Во-первых, явно нужно переименовать столбцы, чтоб было красиво.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(character_counts) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Имя"</span>, <span class="st">"Частота"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(character_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Имя Частота
+1    дед Ефим       1
+2    Дед Ефим       1
+3 дедка Ефима       1
+4       дедко       1
+5  дедко Ефим       1
+6  Дедко Ефим       1</code></pre>
+</div>
+</div>
+<p>Во-вторых, у нас есть проблема с тем, что мы получили список имен во всех их вариациях, а нам нужны уникальные имена персонажей!</p>
+<p>Я сделаю это вручную, так будет надежнее, можно было бы лемматизировать, конечно и безусловно… But and so…</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Имя Частота
+1             Федюнька      42
+2           дедко Ефим      33
+3 Огневушка-Поскакушка      24
+4            старатели      18
+5                филин       4
+6               филина       3
+7                Филин       2
+8                Фили́н       2
+9      Поскакушкинский       1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="визуализируем-данные" class="level1">
+<h1>Визуализируем данные</h1>
+<p>И сделаем небольшой график, на котором наглядно будет показано, сколько раз упоминаются герои.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="about_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Красота же?</p>
+<p><img src="6.jpg" class="img-fluid"></p>
 
 
 
-</main> <!-- /main -->
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Бажов1970" class="csl-entry" role="listitem">
+Бажов, П. П. 1970. <em><span class="nocase">Уральские сказы</span></em>. Издательство "Детская литература".
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
